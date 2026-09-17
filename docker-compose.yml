@@ -1,0 +1,22 @@
+services:
+  api:
+    build: ./backend
+    environment:
+      SECRET_KEY: local-docker-development-only
+      DATABASE_URL: sqlite:////data/wta.db
+      FRONTEND_ORIGIN: http://localhost:5173
+    ports:
+      - "5000:5000"
+    volumes:
+      - api-data:/data
+
+  web:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+volumes:
+  api-data:
+
